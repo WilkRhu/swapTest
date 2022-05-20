@@ -4,7 +4,6 @@ import "dotenv/config";
 import { Application } from 'express';
 import * as http from 'http';
 import { GitHubController } from './controllers/git-hub-controller';
-import './util/module-alias';
 
 export class SetupServer extends Server {
     private server?: http.Server
@@ -15,6 +14,7 @@ export class SetupServer extends Server {
 
     public init(): void {
         this.setupExpress();
+        this.setupController();
     }
 
     private setupExpress() {

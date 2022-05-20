@@ -1,7 +1,7 @@
 import { SetupServer } from '@src/server';
 import supertest from 'supertest';
 
-let server: SetupServer;
+let server = new SetupServer();
 beforeAll(async () => {
   const server = new SetupServer();
   await server.init();
