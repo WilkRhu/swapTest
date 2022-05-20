@@ -1,4 +1,4 @@
-import { transformFirstData, transformIssues } from "@src/utils/transform-response-git";
+import { transformContributors, transformIssues, transformUseRepo } from "@src/services/transform-response-git";
 import axios, { AxiosStatic } from "axios";
 import { env } from "../../config/export-envs";
 
@@ -8,7 +8,7 @@ export class GitHubApi {
     public async get_repository(userName: string, repo: string): Promise<object> {
         try {
             const { data } = await this.request.get(`${env.git}/${userName}/${repo}`)
-            const response = await transformFirstData(data)
+            const response = await transformUseRepo(data)
             return response
 
         } catch (error) {
@@ -23,6 +23,16 @@ export class GitHubApi {
         return response
         } catch (error) {
             throw new Error('Error Api Git Issues')
+        }
+    }
+
+    public async get_contributors(userName: string, repo: string): Promise<any> {
+        try {
+        const { data } = await this.request.get(`${env.git}/${userName}/${repo}/contributors`)
+        const response = await transformContributors(data)
+        return response
+        } catch (error) {
+            throw new Error('Error Api Git Contributors')
         }
     }
 }
