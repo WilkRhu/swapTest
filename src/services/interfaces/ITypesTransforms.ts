@@ -5,13 +5,13 @@ interface TypeTransformIssues {
   }
 
 interface TypeTransformUseRepo {
-    readonly name: string;
+    readonly user: string;
     readonly repository: string
 }
 
 interface TypeTransformContributors {
-    readonly commit: { author: { name: string } }, 
-    readonly author: { login: string}
+    readonly login: string, 
+    readonly contributions: number
 }
 
 export {

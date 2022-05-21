@@ -1,19 +1,17 @@
-import { TypeTransformContributors, TypeTransformIssues, TypeTransformUseRepo } from "./interfaces/ITypesTransforms";
+import { TypeTransformIssues, TypeTransformUseRepo } from "./interfaces/ITypesTransforms";
 
 const transformUseRepo = (data: any): object => {
   try {
     const response: TypeTransformUseRepo = {
-      name: data.owner.login,
+      user: data.owner.login,
       repository: data.name,
     };
     return response
   } catch (error) {
     throw new Error(`${error}`);
-    
+
   }
 };
-
-
 
 const transformIssues = (data: any): any => {
   try {
@@ -26,31 +24,17 @@ const transformIssues = (data: any): any => {
         };
       }
     );
-    
+
   } catch (error) {
     throw new Error(`${error}`);
-    
+
   }
 };
 
-const transformContributors = (data: any): any => {
-  const loginUse: string[] = []
-  const amount = data.map(
-    (item: TypeTransformContributors) => item.commit.author.name
-  );
-  const equals = amount.reduce(function (
-    object: { [x: string]: number },
-    item: string | number
-  ) {
-    if (!object[item]) {
-      object[item] = 1;
-    } else {
-      object[item]++;
-    }
-    return object;
-  },
-  {});
-  console.log(equals)
-};
+const transformContributorsQuantityCommits = (data: any): any => {
+  return data.map((item: { login: string; contributions: number; }) =>
+    ({ name: item.login, qt_commits: item.contributions })
+  )
+}
 
-export { transformUseRepo, transformIssues, transformContributors };
+export { transformUseRepo, transformIssues, transformContributorsQuantityCommits };

@@ -7,15 +7,15 @@ export class GitHubController {
   @Post('/')
   public async getGitHubAPi(req: Request, resp: Response): Promise<any> {
     try {
-      const { userName, repository } = req.body;
+      const { userName, repository }:{userName: string, repository: string} = req.body;
       const repo = await new GitHubApi().get_repository(userName, repository);
       const issues = await new GitHubApi().get_issues(userName, repository);
-      const collaborator = await new GitHubApi().get_contributors(userName, repository);
+      const {contributors} = await new GitHubApi().get_contributors(userName, repository);
 
       return resp.status(200).json({
-        repo,
+        ...repo,
         issues,
-        collaborator,
+        contributors,
       });
     } catch (error) {
       throw new Error('Error');

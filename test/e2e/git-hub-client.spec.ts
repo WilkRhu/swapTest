@@ -13,7 +13,7 @@ describe('Beach gitHub Api functional tets', () => {
       mockEnv.userName,
       mockEnv.repo
     );
-    expect(response).toEqual({ name: 'Fulano', repository: 'testRepository' });
+    expect(response).toEqual({ user: 'Fulano', repository: 'testRepository' });
   });
 
   it('GitHub Client return issues of repository', async () => {
@@ -36,7 +36,12 @@ describe('Beach gitHub Api functional tets', () => {
     const response = await gitHub.get_contributors(
       mockEnv.userName,
       mockEnv.repo
-    );
-   console.log(response)
+    )
+    expect(response).toEqual({
+      contributors: [
+        { name: 'Fulano1', qt_commits: 2 },
+        { name: 'Fulano2', qt_commits: 1 }
+      ]
+    })
   });
 });

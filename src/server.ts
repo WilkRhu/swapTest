@@ -3,18 +3,21 @@ import bodyParser from 'body-parser';
 import "dotenv/config";
 import { Application } from 'express';
 import * as http from 'http';
+import { App } from '../config/export-envs';
 import { GitHubController } from './controllers/git-hub-controller';
+import * as database from './database/database';
 
 export class SetupServer extends Server {
     private server?: http.Server
     
-    constructor(private port = process.env.PORT) {
+    constructor(private port = App.port) {
         super();
     }
 
-    public init(): void {
+    public async init(): Promise<void> {
         this.setupExpress();
         this.setupController();
+       await this.databaseSetup();
     }
 
     private setupExpress() {
@@ -23,6 +26,10 @@ export class SetupServer extends Server {
 
     public getApp(): Application {
         return this.app
+    }
+
+    private async databaseSetup(): Promise<void> {
+      await database.connect();
     }
 
     public setupController(): void {

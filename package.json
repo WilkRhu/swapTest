@@ -35,6 +35,8 @@
     "faker": "^6.6.6",
     "jest": "^28.1.0",
     "module-alias": "^2.2.2",
+    "mongodb-memory-server": "^8.5.2",
+    "mongoose": "^6.3.4",
     "nock": "^13.2.4",
     "prettier": "^2.6.2",
     "supertest": "^6.2.3",
