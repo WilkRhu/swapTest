@@ -1,7 +1,6 @@
 import axios, { AxiosStatic } from "axios";
 import { App } from "../../config/export-envs";
 import { transformContributorsQuantityCommits, transformIssues, transformUseRepo } from "../services/transform-response-git";
-
 export class GitHubApi {
     constructor(protected request: AxiosStatic = axios) {}
 

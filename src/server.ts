@@ -5,7 +5,8 @@ import { Application } from 'express';
 import * as http from 'http';
 import { App } from '../config/export-envs';
 import { GitHubController } from './controllers/git-hub-controller';
-import * as database from './database/database';
+import { DbConnection } from './repositories';
+import "./utils/module-alias";
 
 export class SetupServer extends Server {
     private server?: http.Server
@@ -29,7 +30,7 @@ export class SetupServer extends Server {
     }
 
     private async databaseSetup(): Promise<void> {
-      await database.connect();
+      await new DbConnection().connection()
     }
 
     public setupController(): void {
