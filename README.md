@@ -38,8 +38,3 @@ Framework trás uma gama de ferramentas que facilita a criação de aplicações
 O body-parser é um módulo capaz de converter o body da requisição para vários formatos. Um desses formatos é json, exatamente o que queremos.
 #
 
-<h2 id="design">Design Patterns</h2>
-
-#### Repository Pattern
- É uma representação onde você pode manter todas as operações do seu banco de dados (como uma operação Criar, Ler, Atualizar e Deletar) em um local por Entidade de Negócio, quando você precisar fazer operações com Banco de Dados, não chame diretamente drivers de banco de dados e se você tiver mais um banco de dados, ou bancos de dados diferentes para uma transação, sua aplicação só chama o método de repositório e fica transparente para quem chama.
-#
