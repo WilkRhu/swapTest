@@ -32,7 +32,7 @@
   "include": [
     "./src/**/*.ts",
     "./test/**/*.ts"
-  ],
+, "config/connection-typeorm.ts"  ],
   "exclude": [
     "./node_modules/*",
     "./dist"

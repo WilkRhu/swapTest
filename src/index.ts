@@ -12,7 +12,7 @@ enum ExitStatus {
         await server.init();
         server.start();
     } catch (error) {
-        console.log(`App error: ${error}`)
+        console.timeLog(`App error: ${error}`)
         process.exit(ExitStatus.Failure)
     }
 })();
