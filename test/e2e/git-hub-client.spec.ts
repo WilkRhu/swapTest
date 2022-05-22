@@ -1,5 +1,5 @@
-import { GitHubApi } from '@src/clients/git-hub-api';
 import axios from 'axios';
+import { GitHubApi } from '../../src/clients/git-hub-api';
 import { gitContributors, gitIssues, gitMockRepo } from '../mocks/gitMock';
 jest.mock('axios');
 
