@@ -1,6 +1,6 @@
 import { Controller, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
-import { GitHubService } from '../../services/git-services';
+import { GitHubService } from '../services/git-services';
 
 @Controller('git')
 export class GitHubController {

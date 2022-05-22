@@ -5,8 +5,8 @@ import { Application } from 'express';
 import * as http from 'http';
 import { DbConnection } from '../config/connection-typeorm';
 import { App } from '../config/export-envs';
-import { GitHubController } from './git/controllers/git-hub-controller';
-import "./utils/module-alias";
+import "../src/utils/module-alias";
+import { GitHubController } from './api/controllers/git-hub-controller';
 
 export class SetupServer extends Server {
     private server?: http.Server

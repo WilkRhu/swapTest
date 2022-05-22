@@ -1,7 +1,7 @@
+import { GitHubApi } from '@src/api/clients/git-hub-api';
 import { ObjectId } from "mongoose";
 import { getMongoRepository } from "typeorm";
-import { GitHubApi } from '../clients/git-hub-api';
-import { GitHub } from "../git/entities/gitHub";
+import { GitHub } from "../entities/gitHub";
 import { IGitHubService } from "./interfaces/git-hub-service-interface";
 
 export class GitHubService implements IGitHubService {

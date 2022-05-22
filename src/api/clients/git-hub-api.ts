@@ -1,5 +1,5 @@
 import axios, { AxiosStatic } from "axios";
-import { App } from "../../config/export-envs";
+import { App } from "../../../config/export-envs";
 import { GitHubApiService } from "../services/git-hub-api-services";
 const { transformContributorsQuantityCommits, transformIssues, transformUseRepo } = new GitHubApiService()
 export class GitHubApi {
