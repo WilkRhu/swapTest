@@ -1,4 +1,4 @@
-import { WebHookClient } from '@src/clients/webhook-client';
+import { WebHookClient } from '@src/api/clients/webhook-client';
 import axios from 'axios';
 import { mockInsertWebHook } from '../mocks/gitMock';
 jest.mock('axios');

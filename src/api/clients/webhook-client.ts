@@ -1,5 +1,5 @@
 import axios, { AxiosStatic } from "axios";
-import { App } from "../../config/export-envs";
+import { App } from "../../../config/export-envs";
 
 export class WebHookClient {
     constructor(protected request: AxiosStatic = axios) {}

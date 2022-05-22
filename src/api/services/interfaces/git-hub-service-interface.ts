@@ -1,4 +1,4 @@
-import { GitHub } from "@src/git/entities/gitHub";
+import { GitHub } from "@src/api/entities/gitHub";
 import { ObjectId } from "mongoose";
 
 export interface IGitHubService {

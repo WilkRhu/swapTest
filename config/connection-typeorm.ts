@@ -1,6 +1,6 @@
 import { getConnectionManager } from 'typeorm';
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
-import { GitHub } from '../src/git/entities/gitHub';
+import { GitHub } from '../src/api/entities/gitHub';
 import { App } from './export-envs';
 
 let connectManage = getConnectionManager()
