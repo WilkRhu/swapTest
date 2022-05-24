@@ -1,29 +1,23 @@
-import { getConnectionManager } from 'typeorm';
-import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
+import { createConnection } from 'typeorm';
 import { GitHub } from '../src/api/entities/gitHub';
-import { App } from './export-envs';
-
-let connectManage = getConnectionManager()
-const options: MongoConnectionOptions = {
-    type: "mongodb",
-    url: App.urlDatabase,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    synchronize: true,
-    logging: true,
-    entities: [GitHub]
-}
 
 export class DbConnection {
-    public connection = async (): Promise<void> => {
-        const connection = connectManage.create(options)
-        await connection.connect();
-        console.log('Connect database')
-    }
-    public disconnectDb = async (): Promise<any> => {
-        const desConnect = connectManage.create(options)
-        await desConnect.close()
-        console.log('Disable connections on database')
+    constructor() {}
+    public connection = async (): Promise<any> => {
+       const connect = await createConnection({
+            type: "mongodb",
+            url: process.env.DATA_BASE,
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            synchronize: true,
+            logging: true,
+            entities: [GitHub]
+        })
+        if(connect){
+            console.log("connect db")
+            return connect
+        }
+        console.log('error on connect')
     }
 
 }

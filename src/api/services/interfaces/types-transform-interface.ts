@@ -1,6 +1,6 @@
 interface TypeTransformIssues {
     readonly title: string;
-    readonly  user: { login: string};
+    readonly user: { login: string};
     readonly labels: [ any ]
   }
 
@@ -10,12 +10,12 @@ interface TypeTransformUseRepo {
 }
 
 interface TypeTransformContributors {
-    readonly login: string, 
+    readonly login: string,
     readonly contributions: number
 }
 
 export {
-    TypeTransformIssues,
-    TypeTransformUseRepo,
-    TypeTransformContributors
+  TypeTransformIssues,
+  TypeTransformUseRepo,
+  TypeTransformContributors,
 };

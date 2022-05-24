@@ -1,16 +1,14 @@
 import { SetupServer } from '@src/server';
 import supertest from 'supertest';
-import { DbConnection } from '../config/connection-typeorm';
 
-let server = new SetupServer();
-let connect = new DbConnection();
+jest.setTimeout(3000);
+
 beforeAll(async () => {
   const server = new SetupServer();
   await server.init();
   global.testRequest = supertest(server.getApp());
 });
 
-afterAll(async () => {
-  await server.close()
-  await connect.disconnectDb()
-});
+// afterAll(async () => {
+//   await server.close()
+// });

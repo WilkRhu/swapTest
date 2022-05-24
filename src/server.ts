@@ -1,59 +1,72 @@
 import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
-import "dotenv/config";
+import dotenv from 'dotenv';
 import { Application } from 'express';
 import * as http from 'http';
 import { DbConnection } from '../config/connection-typeorm';
 import { App } from '../config/export-envs';
-import "../src/utils/module-alias";
+import '../src/utils/module-alias';
 import { GitHubController } from './api/controllers/git-hub-controller';
+import { WebHookService } from './api/services/webhook-services';
+
+dotenv.config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
 
 export class SetupServer extends Server {
-    private server?: http.Server
-    
-    constructor(private port = App.port) {
-        super();
-    }
+  private server?: http.Server;
 
-    public async init(): Promise<void> {
-        this.setupExpress();
-        this.setupController();
-        this.databaseSetup();
-    }
+  constructor(
+    private port = App.port
+    ) {
+    super();
+  }
 
-    private setupExpress() {
-        this.app.use(bodyParser.json())
-    }
+  public async init(): Promise<void> {
+    this.setupExpress();
+    this.setupController();
+    await this.databaseSetup();
+  }
 
-    public getApp(): Application {
-        return this.app
-    }
+  private setupExpress() {
+    this.app.use(bodyParser.json());
+  }
 
-    private async databaseSetup(): Promise<void> {
-      await new DbConnection().connection()
-    }
+  public getApp(): Application {
+    return this.app;
+  }
 
-    public setupController(): void {
-        const gitHubController = new GitHubController();
-        this.addControllers([gitHubController])
-    }
+  private async databaseSetup(): Promise<void> {
+    await new DbConnection().connection();
+  }
 
-    public async close(): Promise<void> {
-        if (this.server) {
-          await new Promise((resolve, reject) => {
-            this.server?.close((err) => {
-              if (err) {
-                return reject(err);
-              }
-              resolve(true);
-            });
-          });
-        }
-      }
+  public setupController(): void {
+    const gitHubController = new GitHubController();
+    this.addControllers([gitHubController]);
+  }
 
-    public start(): void {
-        this.server = this.app.listen(this.port, () => {
-            console.log('Server running on port: ' + this.port)
-        })
+  public async close(): Promise<void> {
+    if (this.server) {
+      await new Promise((resolve, reject) => {
+        this.server?.close((err) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(true);
+        });
+      });
     }
+  }
+
+  public async webHook(): Promise<void> {
+    const webHookService = new WebHookService()
+    return await webHookService.queueGitDatabase()
+  }
+
+  public start(): void {
+    this.server = this.app.listen(this.port, () => {
+      console.log(`Server running on port: ${this.port}`);
+    });
+    this.webHook()
+  }
 }

@@ -1,6 +1,7 @@
-import { GitHubApi } from '@src/api/clients/git-hub-api';
+import { GitHubApiClient } from '@src/api/clients/git-hub-api';
 import axios from 'axios';
 import { gitContributors, gitIssues, gitMockRepo } from '../mocks/gitMock';
+
 jest.mock('axios');
 
 describe('Beach gitHub Api functional tets', () => {
@@ -8,10 +9,10 @@ describe('Beach gitHub Api functional tets', () => {
     const mockEnv = { userName: 'Fulano', repo: 'testRepository' };
     const mockAxios = axios as jest.Mocked<typeof axios>;
     mockAxios.get.mockResolvedValue({ data: gitMockRepo });
-    const gitHub = new GitHubApi(axios);
+    const gitHub = new GitHubApiClient(axios);
     const response = await gitHub.get_repository(
       mockEnv.userName,
-      mockEnv.repo
+      mockEnv.repo,
     );
     expect(response).toEqual({ user: 'Fulano', repository: 'testRepository' });
   });
@@ -20,28 +21,28 @@ describe('Beach gitHub Api functional tets', () => {
     const mockEnv = { userName: 'Fulano', repo: 'testRepository' };
     const mockAxios = axios as jest.Mocked<typeof axios>;
     mockAxios.get.mockResolvedValue({ data: gitIssues });
-    const gitHub = new GitHubApi(axios);
+    const gitHub = new GitHubApiClient(axios);
     const response = await gitHub.get_issues(
       mockEnv.userName,
-      mockEnv.repo
+      mockEnv.repo,
     );
-    expect(Object.keys(response[0])).toEqual(["title", "author", "labels"])
+    expect(Object.keys(response[0])).toEqual(['title', 'author', 'labels']);
   });
 
   it('GitHub Client return issues of repository', async () => {
     const mockEnv = { userName: 'Fulano', repo: 'testRepository' };
     const mockAxios = axios as jest.Mocked<typeof axios>;
     mockAxios.get.mockResolvedValue({ data: gitContributors });
-    const gitHub = new GitHubApi(axios);
+    const gitHub = new GitHubApiClient(axios);
     const response = await gitHub.get_contributors(
       mockEnv.userName,
-      mockEnv.repo
-    )
+      mockEnv.repo,
+    );
     expect(response).toEqual({
       contributors: [
         { name: 'Fulano1', qt_commits: 2 },
-        { name: 'Fulano2', qt_commits: 1 }
-      ]
-    })
+        { name: 'Fulano2', qt_commits: 1 },
+      ],
+    });
   });
 });
