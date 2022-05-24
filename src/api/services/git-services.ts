@@ -1,24 +1,31 @@
-import { GitHubApi } from '@src/api/clients/git-hub-api';
-import { ObjectId } from "mongoose";
-import { getMongoRepository } from "typeorm";
-import { GitHub } from "../entities/gitHub";
-import { IGitHubService } from "./interfaces/git-hub-service-interface";
+import { GitHubApiClient } from '@src/api/clients/git-hub-api';
+import { ObjectId } from 'mongoose';
+import { GitHub } from '../entities/gitHub';
+import { GitRepository } from '../repositories/git-repositories';
+import { IGitHubService } from './interfaces/git-hub-service-interface';
+import { WebHookService } from './webhook-services';
 
 export class GitHubService implements IGitHubService {
-    gitRepository = getMongoRepository(GitHub)
-    public async create(userName: string, repository: string): Promise<GitHub> {
-        const repo = await new GitHubApi().get_repository(userName, repository);
-        const issues = await new GitHubApi().get_issues(userName, repository);
-        const { contributors } = await new GitHubApi().get_contributors(userName, repository);
-        const response = {
-            ...repo,
-            issues,
-            contributors
-        }
-        return await this.gitRepository.save(response)
+    constructor(
+        public gitRepository = new GitRepository(),
+        public webHookService = new WebHookService(),
+        public gitHubApiClient = new GitHubApiClient()
+    ) {
+        this.gitRepository = gitRepository;
+        this.webHookService = webHookService;
+        this.gitHubApiClient = gitHubApiClient
     }
 
-    public async findOne(_id: ObjectId): Promise<GitHub[]> {
-        return await this.findOne(_id)
+  public async saveOnDatabaseEnvWebHook(data: any): Promise<any> {
+    try {
+      const saveDataBase = await this.gitRepository.create(data);
+      return saveDataBase;
+    } catch (error) {
+      throw new Error(`${error}`);
     }
+  }
+
+  public async findOne(_id: ObjectId): Promise<GitHub[]> {
+    return await this.findOne(_id);
+  }
 }
