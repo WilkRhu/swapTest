@@ -1,4 +1,4 @@
-import { TypeTransformIssues, TypeTransformUseRepo } from '../api/services/interfaces/types-transform-interface';
+import { TypeTransformIssues, TypeTransformUseRepo } from '../services/interfaces/types-transform-interface';
 
 export class TransformDatasRepo {
   public transformUseRepo = (data: any): object => {

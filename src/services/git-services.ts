@@ -1,7 +1,7 @@
-import { GitHubApiClient } from '@src/api/clients/git-hub-api';
+import { GitHubApiClient } from '@src/clients/git-hub-api-client';
+import { GitHub } from '@src/entities/gitHub';
+import { GitRepository } from '@src/repositories/git-repositories';
 import { ObjectId } from 'mongoose';
-import { GitHub } from '../entities/gitHub';
-import { GitRepository } from '../repositories/git-repositories';
 import { IGitHubService } from './interfaces/git-hub-service-interface';
 import { WebHookService } from './webhook-services';
 

@@ -1,5 +1,5 @@
-import { GitHubApiClient } from '@src/api/clients/git-hub-api';
 import axios from 'axios';
+import { GitHubApiClient } from '../../src/clients/git-hub-api-client';
 import { gitContributors, gitIssues, gitMockRepo } from '../mocks/gitMock';
 
 jest.mock('axios');
@@ -15,7 +15,7 @@ describe('Beach gitHub Api functional tets', () => {
       mockEnv.repo,
     );
     expect(response).toEqual({ user: 'Fulano', repository: 'testRepository' });
-  });
+  }); 
 
   it('GitHub Client return issues of repository', async () => {
     const mockEnv = { userName: 'Fulano', repo: 'testRepository' };

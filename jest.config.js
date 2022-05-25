@@ -6,7 +6,7 @@ module.exports = {
   testMatch: ['<rootDir>/test/**/*.spec.ts'],
   testEnvironment: 'node',
   clearMocks: true,
-  preset: 'ts-jest',
+  preset: '@shelf/jest-mongodb',
   moduleNameMapper: {
     '@src/(.*)': '<rootDir>/src/$1',
     '@test/(.*)': '<rootDir>/spec/$1',
