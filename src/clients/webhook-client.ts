@@ -1,5 +1,6 @@
+import { ClientRequestError } from '@src/utils/errors/cliente-error';
 import axios, { AxiosStatic } from 'axios';
-import { App } from '../../../config/export-envs';
+import { App } from '../config/export-envs';
 
 export class WebHookClient {
   constructor(protected request: AxiosStatic = axios) {}
@@ -9,7 +10,7 @@ export class WebHookClient {
       const response = await this.request.post(`${App.webhook}`, data);
       return response;
     } catch (error) {
-      throw new Error('Error insert webhook!');
+      throw new ClientRequestError(`${error}`)
     }
   }
 }

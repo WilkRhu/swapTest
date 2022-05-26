@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import {
-  Column, CreateDateColumn, Entity, ObjectIdColumn, UpdateDateColumn,
+  Column, CreateDateColumn, Entity, ObjectIdColumn, UpdateDateColumn
 } from 'typeorm';
 
 @Entity()

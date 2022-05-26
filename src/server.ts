@@ -3,11 +3,11 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { Application } from 'express';
 import * as http from 'http';
-import { DbConnection } from '../config/connection-typeorm';
-import { App } from '../config/export-envs';
 import '../src/utils/module-alias';
-import { GitHubController } from './api/controllers/git-hub-controller';
-import { WebHookService } from './api/services/webhook-services';
+import { DbConnection } from './config/connection-typeorm';
+import { App } from './config/export-envs';
+import { GitHubController } from './controllers/git-hub-controller';
+import { WebHookService } from './services/webhook-services';
 
 dotenv.config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
@@ -17,7 +17,7 @@ export class SetupServer extends Server {
   private server?: http.Server;
 
   constructor(
-    private port = App.port
+    private port = App.port,
     ) {
     super();
   }
@@ -26,6 +26,7 @@ export class SetupServer extends Server {
     this.setupExpress();
     this.setupController();
     await this.databaseSetup();
+    this.webHook()
   }
 
   private setupExpress() {
@@ -33,11 +34,12 @@ export class SetupServer extends Server {
   }
 
   public getApp(): Application {
-    return this.app;
+   
+      return this.app;
   }
 
   private async databaseSetup(): Promise<void> {
-    await new DbConnection().connection();
+    await new DbConnection().connectionFunction();
   }
 
   public setupController(): void {
@@ -58,15 +60,13 @@ export class SetupServer extends Server {
     }
   }
 
-  public async webHook(): Promise<void> {
-    const webHookService = new WebHookService()
-    return await webHookService.queueGitDatabase()
+  public async webHook(): Promise<any> {
+    return await new WebHookService().queueGitDatabase()
   }
 
   public start(): void {
     this.server = this.app.listen(this.port, () => {
       console.log(`Server running on port: ${this.port}`);
     });
-    this.webHook()
   }
 }

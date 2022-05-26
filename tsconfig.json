@@ -31,8 +31,8 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./test/**/*.ts"
-, "config/connection-typeorm.ts"  ],
+    "./test/**/*.ts", 
+],
   "exclude": [
     "./node_modules/*",
     "./dist"

@@ -1,14 +1,14 @@
-import { SetupServer } from '@src/server';
 import supertest from 'supertest';
+import { SetupServer } from '../src/server';
 
-jest.setTimeout(3000);
+let server: SetupServer;
 
 beforeAll(async () => {
-  const server = new SetupServer();
+  server = new SetupServer();
   await server.init();
-  global.testRequest = supertest(server.getApp());
+  global.testRequest = supertest(server.getApp())
 });
 
-// afterAll(async () => {
-//   await server.close()
-// });
+afterAll(async () => {
+  await server.close()
+})

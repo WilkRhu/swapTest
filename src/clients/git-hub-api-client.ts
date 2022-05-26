@@ -1,6 +1,7 @@
 import axios, { AxiosStatic } from 'axios';
-import { App } from '../../../config/export-envs';
-import { TransformDatasRepo } from '../../utils/transforms-datas-repo';
+import { App } from '../config/export-envs';
+import { ClientRequestError } from '../utils/errors/cliente-error';
+import { TransformDatasRepo } from '../utils/transforms-datas-repo';
 
 export class GitHubApiClient {
   constructor(
@@ -14,7 +15,7 @@ export class GitHubApiClient {
       const response = this.transformData.transformUseRepo(data);
       if (response) return response;
     } catch (error) {
-      throw new Error(`Error Api Git ${error}`);
+      throw new ClientRequestError(`${error}`);
     }
   }
 
@@ -24,7 +25,7 @@ export class GitHubApiClient {
       const response = this.transformData.transformIssues(data);
       if (response) return response;
     } catch (error) {
-      throw new Error(`Error Api Git Issues ${error}`);
+      throw new ClientRequestError(`${error}`);
     }
   }
 
@@ -34,7 +35,7 @@ export class GitHubApiClient {
       const response = this.transformData.transformContributorsQuantityCommits(data);
       if (response) return { contributors: response };
     } catch (error) {
-      throw new Error(`Error Api Git Contributors ${error}`);
+      throw new ClientRequestError(`${error}`);
     }
   }
 
@@ -50,7 +51,7 @@ export class GitHubApiClient {
       };
       return response
     } catch (error) {
-      throw new Error("Error api github");
+      throw new ClientRequestError(`${error}`);
       
     }
   }
