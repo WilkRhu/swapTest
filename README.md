@@ -1,8 +1,25 @@
 # Swap Test
-
-Aguardando o case ...
-
+ 
+O Case consiste em criar um serviço que recupere todas as issues de um determinado repositório no github e retorne um JSON assincronamente (1 dia de diferença) via webhook com  as issues e contribuidores que existiam no projeto no momento da chamada.
 #
+
+## Solução
+
+Criar uma rota via post ou get que receba os nomes do usuário e do repositório respectivamente para ser consumido por um client da Api do Github.
+- Primeira chamada retorna as informações do usuário/repositório
+- Segundo chamada retorna as informações das issues
+- Terceira chamada retorna as informações dos contribuidores do repositório.
+
+Apos ter essas informações advindas da API tenho que transformar os dados pois só preciso de alguns específicos de cada chamada.
+Sendo assim criei um arquivo na pasta utils que recebe o retorno das apis e pega as informações e retorna da maneira solicitada.
+/swapTest/src/utils/transforms-datas-repo.ts
+
+Após esse processamento é criado um único objeto que retorna para o service /swapTest/src/services/git-services.ts salvar na base de dados, criando assim uma fila de processamento onde 
+posteriormente será utilizado por outro arquivo, salvando o dado retorna uma mensagem para o usuário com algumas informações de criação da própria base de dados que nesse case é o Mongodb.
+
+O arquivo src/services/webhook-services.ts tem a função de verificar os dados salvos na base comparar as datas e enviar para o webhook ou seja ele compara a data de criação com a data atual caso ultrapasse 24 horas ele envia o dado para o webhook e deleta da base o dado enviado.
+Essa funcionalidade independe de requests, foi criado um timeout configurável para essa verificação sendo assim ela fica buscando e enviando sem a necessidade de ser chamada ou ativada.
+
 
 ## Sumário
 - [Pacotes Utilizado](#pact)
