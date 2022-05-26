@@ -3,8 +3,10 @@ import { App } from '@src/config/export-envs';
 import { GitRepository } from '@src/repositories/git-repositories';
 
 export class WebHookService {
-  webHookClient = new WebHookClient();
-  gitRepository = new GitRepository();
+  [x: string]: any;
+  public webHookClient = new WebHookClient();
+  public gitRepository = new GitRepository();
+
   
 
   public autoInterval: any = setInterval(() => {
@@ -12,21 +14,22 @@ export class WebHookService {
   }, App.timeout)
 
   
-  public async queueGitDatabase(): Promise<any> {
+  public async queueGitDatabase(): Promise<object> {
     const queueGitDatabase = await this.gitRepository.findAll();
     return await this.insertFunctionWebhook(queueGitDatabase);
   }
 
-  public async insertFunctionWebhook(data: any): Promise<any> {
+  public async insertFunctionWebhook(data: any): Promise<object> {
     const compare = await this.searchDateDataBase(data);
     const responseNoEnv: any[] = []
     compare.map(async (item: any, index: number) => (item > 0
       ?
       await this.webHookClient.sendWebHook(data[index]) &&
       await this.gitRepository.remove(data[index]._id) && console.log('env for webhook')
-      : responseNoEnv.push('Sent to database wait 24 hours to be sent to webhook') 
+      : responseNoEnv.push(`have ${compare.length} item queued to send directly to webhook`) 
     ));
     console.log(new Set([...responseNoEnv]))
+    return new Set([...responseNoEnv])
   }
 
   public async searchDateDataBase(data: any): Promise<any> {

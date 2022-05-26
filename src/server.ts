@@ -17,7 +17,7 @@ export class SetupServer extends Server {
   private server?: http.Server;
 
   constructor(
-    private port = App.port
+    private port = App.port,
     ) {
     super();
   }
@@ -26,6 +26,7 @@ export class SetupServer extends Server {
     this.setupExpress();
     this.setupController();
     await this.databaseSetup();
+    this.webHook()
   }
 
   private setupExpress() {
@@ -33,7 +34,8 @@ export class SetupServer extends Server {
   }
 
   public getApp(): Application {
-    return this.app;
+   
+      return this.app;
   }
 
   private async databaseSetup(): Promise<void> {
@@ -58,15 +60,13 @@ export class SetupServer extends Server {
     }
   }
 
-  public async webHook(): Promise<void> {
-    const webHookService = new WebHookService()
-    return await webHookService.queueGitDatabase()
+  public async webHook(): Promise<any> {
+    return await new WebHookService().queueGitDatabase()
   }
 
   public start(): void {
     this.server = this.app.listen(this.port, () => {
       console.log(`Server running on port: ${this.port}`);
     });
-    this.webHook()
   }
 }

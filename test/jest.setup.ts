@@ -1,13 +1,12 @@
 import supertest from 'supertest';
-import { DbConnection } from "../src/config/connection-typeorm";
 import { SetupServer } from '../src/server';
 
 let server: SetupServer;
-let connection: DbConnection;
 
 beforeAll(async () => {
+  server = new SetupServer();
   await server.init();
-  global.testRequest = supertest(server.getApp());
+  global.testRequest = supertest(server.getApp())
 });
 
 afterAll(async () => {
