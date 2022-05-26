@@ -13,7 +13,7 @@ export class TransformDatasRepo {
     }
   };
 
-  public transformIssues = (data: any): any => {
+  public transformIssues = (data: any): object => {
     try {
       return data.map(
         (item: TypeTransformIssues) => ({
@@ -27,5 +27,5 @@ export class TransformDatasRepo {
     }
   };
 
-  public transformContributorsQuantityCommits = (data: any): any => data.map((item: { login: string; contributions: number; }) => ({ name: item.login, qt_commits: item.contributions }));
+  public transformContributorsQuantityCommits = (data: any): object => data.map((item: { login: string; contributions: number; }) => ({ name: item.login, qt_commits: item.contributions }));
 }

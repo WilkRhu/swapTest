@@ -4,7 +4,7 @@ import { IGitHubService } from './interfaces/git-hub-service-interface';
 export class GitHubService implements IGitHubService {
   public gitRepository = new GitRepository();
 
-  public async saveOnDatabaseEnvWebHook(data: any): Promise<any> {
+  public async saveOnDatabaseEnvWebHook(data: string[]): Promise<string[]> {
     try {
       const saveDataBase = await this.gitRepository.create(data);
       return saveDataBase;

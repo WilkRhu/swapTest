@@ -3,7 +3,6 @@ import { App } from '@src/config/export-envs';
 import { GitRepository } from '@src/repositories/git-repositories';
 
 export class WebHookService {
-  [x: string]: any;
   public webHookClient = new WebHookClient();
   public gitRepository = new GitRepository();
 
@@ -32,8 +31,8 @@ export class WebHookService {
     return new Set([...responseNoEnv])
   }
 
-  public async searchDateDataBase(data: any): Promise<any> {
-    const dataOnDatabase: any[] = [];
+  public async searchDateDataBase(data: any): Promise<number[]> {
+    const dataOnDatabase: string[] = [];
     await data.map((item: { created_at: any; }) => {
       dataOnDatabase.push(item.created_at);
     });
@@ -41,7 +40,7 @@ export class WebHookService {
     return this.diffData(dataOnDatabase);
   }
 
-  public diffData(data: any) {
+  public diffData(data: string[]): number[] {
     const response: any[] = [];
     const divider = 1000 * 60 * 60 * 24
     data.map((item: string) => {
