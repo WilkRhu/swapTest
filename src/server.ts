@@ -3,11 +3,11 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { Application } from 'express';
 import * as http from 'http';
-import '../src/utils/module-alias';
-import { DbConnection } from './config/connection-typeorm';
 import { App } from './config/export-envs';
 import { GitHubController } from './controllers/git-hub-controller';
+import * as database from './database';
 import { WebHookService } from './services/webhook-services';
+import './utils/module-alias';
 
 dotenv.config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
@@ -39,7 +39,7 @@ export class SetupServer extends Server {
   }
 
   private async databaseSetup(): Promise<void> {
-    await new DbConnection().connectionFunction();
+    await database.connect();
   }
 
   public setupController(): void {
