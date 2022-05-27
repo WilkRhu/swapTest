@@ -1,4 +1,4 @@
 
 export interface IGitHubService {
-    saveOnDatabaseEnvWebHook(data: string[]): Promise<string[]>;
+    saveOnDatabaseEnvWebHook(data: object): Promise<object>;
 }

@@ -1,6 +1,6 @@
-import { WebHookClient } from '@src/clients/webhook-client';
-import { App } from '@src/config/export-envs';
-import { GitRepository } from '@src/repositories/git-repositories';
+import { WebHookClient } from '../../src/clients/webhook-client';
+import { App } from '../../src/config/export-envs';
+import { GitRepository } from '../../src/repositories/git-repositories';
 
 export class WebHookService {
   public webHookClient = new WebHookClient();
@@ -13,12 +13,12 @@ export class WebHookService {
   }, App.timeout)
 
   
-  public async queueGitDatabase(): Promise<object> {
+  public async queueGitDatabase(): Promise<any> {
     const queueGitDatabase = await this.gitRepository.findAll();
     return await this.insertFunctionWebhook(queueGitDatabase);
   }
 
-  public async insertFunctionWebhook(data: any): Promise<object> {
+  public async insertFunctionWebhook(data: any): Promise<void> {
     const compare = await this.searchDateDataBase(data);
     const responseNoEnv: any[] = []
     compare.map(async (item: any, index: number) => (item > 0
@@ -28,13 +28,12 @@ export class WebHookService {
       : responseNoEnv.push(`have ${compare.length} item queued to send directly to webhook`) 
     ));
     console.log(new Set([...responseNoEnv]))
-    return new Set([...responseNoEnv])
   }
 
   public async searchDateDataBase(data: any): Promise<number[]> {
     const dataOnDatabase: string[] = [];
-    await data.map((item: { created_at: any; }) => {
-      dataOnDatabase.push(item.created_at);
+    await data.map((item: { createdAt: any; }) => {
+      dataOnDatabase.push(item.createdAt);
     });
     
     return this.diffData(dataOnDatabase);

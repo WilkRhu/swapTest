@@ -1,18 +1,19 @@
-import { getRepository } from 'typeorm';
-import { GitHub } from '../entities/gitHub';
+import { ObjectId } from 'bson';
+import { GitHub } from '../model/git-hub-model';
+import { GitDto } from './dto/git-dto';
 
 export class GitRepository {
- private gitRepository = getRepository(GitHub);
 
-  public async create(data: any): Promise<any> {
-    return await this.gitRepository.save(data);
+  public async create(data: GitDto): Promise<GitHub> {
+    const git = new GitHub(data)
+    return await git.save()
   }
 
   public async findAll(): Promise<GitHub[]> {
-    return await this.gitRepository.find();
+    return await GitHub.find()
   }
 
-  public async remove(_id: string): Promise<any> {
-    return await this.gitRepository.delete(_id);
+  public async remove(_id: ObjectId): Promise<any> {
+    return await GitHub.remove(_id);
   }
 }

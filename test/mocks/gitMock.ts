@@ -1,3 +1,5 @@
+import { GitDto } from "@src/repositories/dto/git-dto";
+
 export const gitMockRepo = {
   name: 'testRepository',
   owner: {
@@ -143,31 +145,22 @@ export const gitContributors = [
   },
 ];
 
-export const mockInsertWebHook = [
+export const mockInsertWebHook: GitDto = 
   {
     user: 'Fulano',
     repository: 'fulanoRepository',
-    issues: [],
+    issues: [
+      {
+        title: "string",
+        author: "string",
+        labels: [],
+    }
+    ],
     contributors: [
       {
         name: 'Fulano',
         qt_commits: 22,
       },
     ],
-    created_at: '2022-05-22T01:14:16.423Z',
-    updated_at: '2022-05-22T01:14:16.423Z',
-  },
-  {
-    user: 'Fulano',
-    repository: 'fulanoRepository',
-    issues: [],
-    contributors: [
-      {
-        name: 'Fulano',
-        qt_commits: 22,
-      },
-    ],
-    created_at: '2022-05-23T01:14:16.423Z',
-    updated_at: '2022-05-23T01:14:16.423Z',
-  },
-];
+
+  }

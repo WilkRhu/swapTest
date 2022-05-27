@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GitHubApiClient } from '../../src/clients/git-hub-api-client';
-import { gitContributors, gitIssues, gitMockRepo } from '../mocks/gitMock';
+import { gitContributors, gitIssues, gitMockRepo, mockInsertWebHook } from '../mocks/gitMock';
 
 jest.mock('axios');
 
@@ -15,7 +15,8 @@ describe('Beach gitHub Api functional tets', () => {
       mockEnv.repo,
     );
     expect(response).toEqual({ user: 'Fulano', repository: 'testRepository' });
-  }); 
+  });
+
 
   it('GitHub Client return issues of repository', async () => {
     const mockEnv = { userName: 'Fulano', repo: 'testRepository' };
@@ -29,7 +30,7 @@ describe('Beach gitHub Api functional tets', () => {
     expect(Object.keys(response[0])).toEqual(['title', 'author', 'labels']);
   });
 
-  it('GitHub Client return issues of repository', async () => {
+  it('GitHub Client return contributors of repository', async () => {
     const mockEnv = { userName: 'Fulano', repo: 'testRepository' };
     const mockAxios = axios as jest.Mocked<typeof axios>;
     mockAxios.get.mockResolvedValue({ data: gitContributors });
@@ -44,5 +45,22 @@ describe('Beach gitHub Api functional tets', () => {
         { name: 'Fulano2', qt_commits: 1 },
       ],
     });
+  });
+
+  it('GitHub Client return responseClients of repository', async () => {
+    try {
+      const mockEnv = { userName: 'Fulano', repo: 'testRepository' };
+      const mockAxios = axios as jest.Mocked<typeof axios>;
+      mockAxios.get.mockResolvedValue({ data: mockInsertWebHook });
+      const gitHub = new GitHubApiClient(axios);
+      const response = await gitHub.responseClient(
+        mockEnv.userName,
+        mockEnv.repo,
+      );
+      
+    } catch (error) {
+      expect(JSON.stringify(error)).toBe("{\"code\":500,\"name\":\"ClientRequestError\"}")
+    }
+  
   });
 });
