@@ -24,6 +24,7 @@ Essa funcionalidade independe de requests, foi criado um timeout configurável p
 ## Sumário
 - [Pacotes Utilizado](#pact)
 - [Design Patterns](#design)
+- [Fluxo](#flux)
 
 <h2 id="pact">Pacotes Utilizado</h2>
 
@@ -55,3 +56,6 @@ Framework trás uma gama de ferramentas que facilita a criação de aplicações
 O body-parser é um módulo capaz de converter o body da requisição para vários formatos. Um desses formatos é json, exatamente o que queremos.
 #
 
+
+<h2 id="flu">Fluxo</h2>
+<img src="https://user-images.githubusercontent.com/29145254/171059200-7b3019a5-78fc-4961-b113-da85ba5202d2.png"/>
