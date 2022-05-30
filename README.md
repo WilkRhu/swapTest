@@ -1,4 +1,11 @@
-# Swap Test
+# Sumário
+- [Pacotes Utilizado](#pact)
+- [Design Patterns](#design)
+- [Fluxo](#flux)
+
+
+
+## Swap Test
  
 O Case consiste em criar um serviço que recupere todas as issues de um determinado repositório no github e retorne um JSON assincronamente (1 dia de diferença) via webhook com  as issues e contribuidores que existiam no projeto no momento da chamada.
 #
@@ -21,10 +28,6 @@ O arquivo src/services/webhook-services.ts tem a função de verificar os dados 
 Essa funcionalidade independe de requests, foi criado um timeout configurável para essa verificação sendo assim ela fica buscando e enviando sem a necessidade de ser chamada ou ativada.
 
 
-## Sumário
-- [Pacotes Utilizado](#pact)
-- [Design Patterns](#design)
-- [Fluxo](#flux)
 
 <h2 id="pact">Pacotes Utilizado</h2>
 
