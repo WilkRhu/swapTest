@@ -2,7 +2,11 @@ import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { Application } from 'express';
+import { OpenApiValidator } from 'express-openapi-validator';
+import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import * as http from 'http';
+import swaggerUi from 'swagger-ui-express';
+import apiSchema from './apiSchema.json';
 import { App } from './config/export-envs';
 import { GitHubController } from './controllers/git-hub-controller';
 import * as database from './database';
@@ -25,8 +29,9 @@ export class SetupServer extends Server {
   public async init(): Promise<void> {
     this.setupExpress();
     this.setupController();
+    await this.docsSetup()
     await this.databaseSetup();
-    this.webHook()
+    this.webHook();
   }
 
   private setupExpress() {
@@ -34,12 +39,20 @@ export class SetupServer extends Server {
   }
 
   public getApp(): Application {
-   
       return this.app;
   }
 
   private async databaseSetup(): Promise<void> {
     await database.connect();
+  }
+
+  private async docsSetup(): Promise<void> {
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
+    await new OpenApiValidator({
+      apiSpec: apiSchema as OpenAPIV3.Document,
+      validateRequests: true,
+      validateResponses: true,
+    }).installSync(this.app)
   }
 
   public setupController(): void {

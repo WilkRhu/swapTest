@@ -24,10 +24,10 @@ export class WebHookService {
     compare.map(async (item: any, index: number) => (item > 0
       ?
       await this.webHookClient.sendWebHook(data[index]) &&
-      await this.gitRepository.remove(data[index]._id) && console.log('env for webhook')
+      await this.gitRepository.remove(data[index]._id) &&  console.log({message: 'env for webhook'})
       : responseNoEnv.push(`have ${compare.length} item queued to send directly to webhook`) 
     ));
-    console.log(new Set([...responseNoEnv]))
+    console.log({message: new Set([...responseNoEnv])})
   }
 
   public async searchDateDataBase(data: any): Promise<number[]> {
