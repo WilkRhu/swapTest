@@ -1,0 +1,8 @@
+{
+    "App": {
+      "port": "PORT",
+      "database": {
+        "mongoUrl": "DATA_BASE"
+      }
+    }
+  }
