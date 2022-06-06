@@ -34,7 +34,7 @@
           },
           "responses": {
             "201": {
-              "description": "The user has been created",
+              "description": "The git has been created",
               "content": {
                 "application/json": {
                   "schema": {
